@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://bbx0gmq2u06ns"]
+
+[ext_resource type="Script" uid="uid://8k51sh82b2go" path="res://main/entities/character.gd" id="1_u7xqv"]
+[ext_resource type="Script" uid="uid://d1uwcmwoitndo" path="res://main/components/animation_component.gd" id="2_gosl2"]
+[ext_resource type="Script" uid="uid://dri4aps12ghpi" path="res://main/states/state_machine.gd" id="3_yoe28"]
+
+[node name="Character" type="CharacterBody2D" unique_id=244251850 node_paths=PackedStringArray("body_sprite", "component_root", "state_machine", "anim_player")]
+script = ExtResource("1_u7xqv")
+body_sprite = NodePath("Sprite2D")
+component_root = NodePath("ComponentRoot")
+state_machine = NodePath("StateMachine")
+anim_player = NodePath("BodyAnimPlayer")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=95277291]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1303581947]
+
+[node name="ComponentRoot" type="Node" parent="." unique_id=663176264]
+
+[node name="AnimationComponent" type="Node" parent="ComponentRoot" unique_id=399223548 node_paths=PackedStringArray("body_anim_player")]
+script = ExtResource("2_gosl2")
+body_anim_player = NodePath("../../BodyAnimPlayer")
+metadata/_custom_type_script = "uid://d1uwcmwoitndo"
+
+[node name="StateMachine" type="Node" parent="." unique_id=2087782720 node_paths=PackedStringArray("body_state_root")]
+script = ExtResource("3_yoe28")
+body_state_root = NodePath("BodyStates")
+metadata/_custom_type_script = "uid://dri4aps12ghpi"
+
+[node name="BodyStates" type="Node" parent="StateMachine" unique_id=834736534]
+
+[node name="BodyAnimPlayer" type="AnimationPlayer" parent="." unique_id=901066814]

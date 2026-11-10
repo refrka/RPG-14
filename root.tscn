@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://bh2y1aligke26"]
+
+[ext_resource type="Script" uid="uid://dt6krajbiiegc" path="res://root.gd" id="1_pq8q7"]
+[ext_resource type="Script" uid="uid://boaii8l2oakhh" path="res://main/locations/location.gd" id="2_pyidc"]
+
+[node name="Root" type="Node" unique_id=1505947257 groups=["root"]]
+script = ExtResource("1_pq8q7")
+metadata/_edit_vertical_guides_ = [-53.0]
+
+[node name="Location" type="Node2D" parent="." unique_id=1182571732 node_paths=PackedStringArray("character_root", "prop_root", "pickup_root") groups=["location"]]
+script = ExtResource("2_pyidc")
+location_id = &"Location1"
+character_root = NodePath("YSortRoot/Characters")
+prop_root = NodePath("YSortRoot/Props")
+pickup_root = NodePath("YSortRoot/Pickups")
+
+[node name="YSortRoot" type="Node2D" parent="Location" unique_id=2010954845]
+y_sort_enabled = true
+
+[node name="Characters" type="Node2D" parent="Location/YSortRoot" unique_id=710288459]
+y_sort_enabled = true
+
+[node name="Props" type="Node2D" parent="Location/YSortRoot" unique_id=1181155419]
+y_sort_enabled = true
+
+[node name="Pickups" type="Node2D" parent="Location/YSortRoot" unique_id=1499614802]
+y_sort_enabled = true
