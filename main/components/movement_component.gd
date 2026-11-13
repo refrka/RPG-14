@@ -12,6 +12,31 @@ signal face_dir_changed(dir: Vector2)
 
 var face_dir: Vector2
 
+var modifier_tracker:= ModifierTracker.new()
+
+
+
+
+func initialize(_entity: Entity) -> void:
+
+	super(_entity)
+
+	entity.hurtbox.damage_package_received.connect(_on_damage_package_received)
+
+
+
+func halt() -> void:
+
+	entity.velocity = Vector2.ZERO
+
+
+
+func deactivate() -> void:
+
+	halt()
+
+	super()
+
 
 
 func get_move_dir() -> Vector2:
@@ -20,9 +45,23 @@ func get_move_dir() -> Vector2:
 
 
 
+func get_move_speed() -> float:
+
+	var override = modifier_tracker.get_float_override()
+
+	if override != -1.0:
+
+		return override
+
+	return 50.0 + modifier_tracker.get_float_add()
+
+
+
 func get_move_velocity() -> Vector2:
 
-	return Vector2.ZERO
+	
+
+	return (get_move_dir() * get_move_speed()) + modifier_tracker.get_vector()
 
 
 
@@ -46,7 +85,18 @@ func set_face_dir(dir: Vector2) -> void:
 
 
 
-func _physics_process(_delta: float) -> void:
+func _on_damage_package_received(damage_package: DamagePackage) -> void:
+
+	var value = damage_package.dir * 250.0
+
+	var modifier = Modifier.new_decay(value, 14.0, Modifier.Operator.ADD)
+
+	modifier_tracker.add_modifier(modifier)
+
+
+
+
+func _physics_process(delta: float) -> void:
 
 	if not active:
 
@@ -71,3 +121,5 @@ func _physics_process(_delta: float) -> void:
 	if move_dir != Vector2.ZERO:
 
 		set_face_dir(move_dir)
+
+	modifier_tracker.tick(delta)

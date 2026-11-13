@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://r4y2t3y3vswq"]
+
+[ext_resource type="PackedScene" uid="uid://dkrde3fi4f2ps" path="res://main/entities/prop.tscn" id="1_l7go1"]
+[ext_resource type="Texture2D" uid="uid://dakjviph4buu7" path="res://resources/textures/props/containers/large_normal_chest_sprite_texture.png" id="2_03mm0"]
+[ext_resource type="Script" uid="uid://xes7khurv8b0" path="res://main/entities/entity_def.gd" id="2_gqn6q"]
+[ext_resource type="Script" uid="uid://brh8r4f58q1ji" path="res://main/items/inventory.gd" id="3_mo423"]
+[ext_resource type="Script" uid="uid://daqaddlvw1yt1" path="res://main/components/container_component.gd" id="4_6cc0w"]
+[ext_resource type="Script" uid="uid://ckd833jqq2h5p" path="res://main/items/item_stack.gd" id="4_v4mem"]
+[ext_resource type="Texture2D" uid="uid://xo52836ty2ec" path="res://resources/textures/entity_shadow.png" id="5_v4mem"]
+[ext_resource type="AudioStream" uid="uid://bh72t31736nur" path="res://resources/audio/chest_open_audio.wav" id="8_n0aim"]
+[ext_resource type="AudioStream" uid="uid://bj7rptios67ce" path="res://resources/audio/chest_close_audio.wav" id="9_bg1p5"]
+
+[sub_resource type="Resource" id="Resource_51lj8"]
+script = ExtResource("2_gqn6q")
+entity_id = &"large_normal_chest"
+metadata/_custom_type_script = "uid://xes7khurv8b0"
+
+[sub_resource type="Resource" id="Resource_6cc0w"]
+script = ExtResource("3_mo423")
+size = 9
+metadata/_custom_type_script = "uid://brh8r4f58q1ji"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_03mm0"]
+size = Vector2(14, 4)
+
+[node name="LargeNormalChest" unique_id=1163554435 instance=ExtResource("1_l7go1")]
+collision_layer = 21
+entity_def = SubResource("Resource_51lj8")
+inventory = SubResource("Resource_6cc0w")
+
+[node name="ShadowSprite" parent="." index="0" unique_id=946318889]
+modulate = Color(0, 0, 0, 0.15686275)
+texture = ExtResource("5_v4mem")
+
+[node name="BodySprite" parent="." index="1" unique_id=1458257426]
+texture = ExtResource("2_03mm0")
+offset = Vector2(0, -8)
+hframes = 3
+
+[node name="CollisionShape2D" parent="." index="2" unique_id=1000956437]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_03mm0")
+
+[node name="ContainerComponent" type="Node" parent="ComponentRoot" parent_id_path=PackedInt32Array(32807062) index="0" unique_id=713042805]
+script = ExtResource("4_6cc0w")
+open_audio = ExtResource("8_n0aim")
+close_audio = ExtResource("9_bg1p5")
+state_frames = Dictionary[int, int]({
+0: 0,
+1: 1,
+2: 1
+})
+metadata/_custom_type_script = "uid://daqaddlvw1yt1"
+
+[node name="CenterMarker" parent="." index="7" unique_id=848586169]
+position = Vector2(0, -4)
+
+[editable path="Hurtbox"]

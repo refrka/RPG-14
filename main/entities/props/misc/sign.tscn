@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://dq1lfs64ekhld"]
+
+[ext_resource type="PackedScene" uid="uid://dkrde3fi4f2ps" path="res://main/entities/prop.tscn" id="1_0xqlh"]
+[ext_resource type="Script" uid="uid://xes7khurv8b0" path="res://main/entities/entity_def.gd" id="2_qto16"]
+[ext_resource type="Texture2D" uid="uid://cxldvuo086np4" path="res://resources/textures/props/furnishings/sign_texture.png" id="3_khcp3"]
+[ext_resource type="Script" uid="uid://dq75fgwmcilsb" path="res://main/components/message_board_component.gd" id="4_qto16"]
+
+[sub_resource type="Resource" id="Resource_b25hr"]
+script = ExtResource("2_qto16")
+entity_id = &"sign"
+metadata/_custom_type_script = "uid://xes7khurv8b0"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cwfgc"]
+size = Vector2(12, 4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0xqlh"]
+size = Vector2(2, 3)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hm1pc"]
+size = Vector2(12, 9)
+
+[node name="Sign" unique_id=1163554435 instance=ExtResource("1_0xqlh")]
+collision_layer = 21
+entity_def = SubResource("Resource_b25hr")
+
+[node name="BodySprite" parent="." index="0" unique_id=1458257426]
+texture = ExtResource("3_khcp3")
+offset = Vector2(0, -8)
+
+[node name="CollisionShape2D" parent="." index="1" unique_id=1000956437]
+position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_cwfgc")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." index="2" unique_id=147072176]
+position = Vector2(0, -1.5)
+shape = SubResource("RectangleShape2D_0xqlh")
+debug_color = Color(1, 0.3, 0, 0)
+
+[node name="CollisionShape2D" parent="Hurtbox" parent_id_path=PackedInt32Array(1215618639) index="0" unique_id=1341878009]
+position = Vector2(0, -7.5)
+shape = SubResource("RectangleShape2D_hm1pc")
+
+[node name="MessageBoardComponent" type="Node" parent="ComponentRoot" parent_id_path=PackedInt32Array(32807062) index="0" unique_id=220724775]
+script = ExtResource("4_qto16")
+metadata/_custom_type_script = "uid://dq75fgwmcilsb"
+
+[node name="CenterMarker" parent="." index="7" unique_id=848586169]
+position = Vector2(0, -7)
+
+[editable path="Hurtbox"]

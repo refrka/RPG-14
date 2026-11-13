@@ -38,13 +38,32 @@ func get_move_dir() -> Vector2:
 
 
 
-
-
 func get_move_velocity() -> Vector2:
 
-	return get_move_dir() * 50.0
+	var dir = get_move_dir()
+
+	var speed = get_move_speed()
+
+	if dir != Vector2.ZERO and Input.get_vector("move_left", "move_right", "move_up", "move_down") == Vector2.ZERO:
+
+		dir = Vector2.ZERO
+
+		update_pressed_states()
+
+	return dir * speed
 
 
+
+
+func update_pressed_states() -> void:
+
+	move_left_pressed = Input.is_action_pressed("move_left")
+
+	move_right_pressed = Input.is_action_pressed("move_right")
+
+	move_up_pressed = Input.is_action_pressed("move_up")
+
+	move_down_pressed = Input.is_action_pressed("move_down")
 
 
 

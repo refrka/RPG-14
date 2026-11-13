@@ -10,6 +10,8 @@ var entity: Entity
 
 
 
+
+
 func initialize(_entity: Entity) -> void:
 
 	entity = _entity
@@ -34,3 +36,6 @@ func deactivate() -> void:
 
 
 
+func _on_death() -> void:
+
+	pass

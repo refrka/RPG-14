@@ -2,31 +2,80 @@
 
 [ext_resource type="Script" uid="uid://8k51sh82b2go" path="res://main/entities/character.gd" id="1_u7xqv"]
 [ext_resource type="Script" uid="uid://d1uwcmwoitndo" path="res://main/components/animation_component.gd" id="2_gosl2"]
+[ext_resource type="PackedScene" uid="uid://cnceur2qbsi5j" path="res://main/combat/hitbox.tscn" id="2_ruoji"]
+[ext_resource type="PackedScene" uid="uid://bx6lm42arl201" path="res://main/combat/hurtbox.tscn" id="3_6ows6"]
 [ext_resource type="Script" uid="uid://dri4aps12ghpi" path="res://main/states/state_machine.gd" id="3_yoe28"]
+[ext_resource type="Script" uid="uid://cm1mltsebyv17" path="res://main/states/combat_idle_state.gd" id="7_b4l5d"]
+[ext_resource type="Script" uid="uid://cx10k3bwfddon" path="res://main/states/combat_attacking_state.gd" id="8_4wlbt"]
+[ext_resource type="Script" uid="uid://crn7vt5fyfxyn" path="res://main/states/combat_charging_state.gd" id="9_83ejh"]
 
-[node name="Character" type="CharacterBody2D" unique_id=244251850 node_paths=PackedStringArray("body_sprite", "component_root", "state_machine", "anim_player")]
+[node name="Character" type="CharacterBody2D" unique_id=244251850 node_paths=PackedStringArray("body_sprite", "combat_root", "hitbox", "hurtbox", "component_root", "state_machine", "center_marker")]
+collision_layer = 3
+collision_mask = 16
+motion_mode = 1
 script = ExtResource("1_u7xqv")
-body_sprite = NodePath("Sprite2D")
+body_sprite = NodePath("CanvasGroup/BodySprite")
+combat_root = NodePath("CanvasGroup/CombatRoot")
+hitbox = NodePath("CanvasGroup/CombatRoot/CombatPivot/Hitbox")
+hurtbox = NodePath("Hurtbox")
 component_root = NodePath("ComponentRoot")
 state_machine = NodePath("StateMachine")
-anim_player = NodePath("BodyAnimPlayer")
+center_marker = NodePath("CenterMarker")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=95277291]
+[node name="ShadowSprite" type="Sprite2D" parent="." unique_id=151902644]
+
+[node name="CanvasGroup" type="CanvasGroup" parent="." unique_id=1190131840]
+y_sort_enabled = true
+
+[node name="BodySprite" type="Sprite2D" parent="CanvasGroup" unique_id=95277291]
+
+[node name="CombatRoot" type="Node2D" parent="CanvasGroup" unique_id=1784359948]
+y_sort_enabled = true
+
+[node name="CombatPivot" type="Node2D" parent="CanvasGroup/CombatRoot" unique_id=1494530653]
+
+[node name="WeaponSprite" type="Sprite2D" parent="CanvasGroup/CombatRoot/CombatPivot" unique_id=1943318651]
+
+[node name="Hitbox" parent="CanvasGroup/CombatRoot/CombatPivot" unique_id=72943803 instance=ExtResource("2_ruoji")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1303581947]
+debug_color = Color(1, 0.3, 0, 0)
+
+[node name="Hurtbox" parent="." unique_id=1215618639 instance=ExtResource("3_6ows6")]
 
 [node name="ComponentRoot" type="Node" parent="." unique_id=663176264]
 
-[node name="AnimationComponent" type="Node" parent="ComponentRoot" unique_id=399223548 node_paths=PackedStringArray("body_anim_player")]
+[node name="AnimationComponent" type="Node" parent="ComponentRoot" unique_id=399223548 node_paths=PackedStringArray("body_anim_player", "combat_anim_player")]
 script = ExtResource("2_gosl2")
 body_anim_player = NodePath("../../BodyAnimPlayer")
+combat_anim_player = NodePath("../../CombatAnimPlayer")
 metadata/_custom_type_script = "uid://d1uwcmwoitndo"
 
-[node name="StateMachine" type="Node" parent="." unique_id=2087782720 node_paths=PackedStringArray("body_state_root")]
+[node name="StateMachine" type="Node" parent="." unique_id=2087782720 node_paths=PackedStringArray("body_state_root", "combat_state_root", "initial_combat_state")]
 script = ExtResource("3_yoe28")
 body_state_root = NodePath("BodyStates")
+combat_state_root = NodePath("CombatStates")
+initial_combat_state = NodePath("CombatStates/CombatIdleState")
 metadata/_custom_type_script = "uid://dri4aps12ghpi"
 
 [node name="BodyStates" type="Node" parent="StateMachine" unique_id=834736534]
 
+[node name="CombatStates" type="Node" parent="StateMachine" unique_id=1207183315]
+
+[node name="CombatIdleState" type="Node" parent="StateMachine/CombatStates" unique_id=1046382269]
+script = ExtResource("7_b4l5d")
+
+[node name="CombatAttackingState" type="Node" parent="StateMachine/CombatStates" unique_id=1403883679]
+script = ExtResource("8_4wlbt")
+
+[node name="CombatChargingState" type="Node" parent="StateMachine/CombatStates" unique_id=2130320837]
+script = ExtResource("9_83ejh")
+
 [node name="BodyAnimPlayer" type="AnimationPlayer" parent="." unique_id=901066814]
+
+[node name="CombatAnimPlayer" type="AnimationPlayer" parent="." unique_id=498547204]
+
+[node name="CenterMarker" type="Marker2D" parent="." unique_id=2083318839]
+
+[editable path="CanvasGroup/CombatRoot/CombatPivot/Hitbox"]
+[editable path="Hurtbox"]

@@ -1,0 +1,87 @@
+[gd_scene format=3 uid="uid://bq8c7ku6hykd3"]
+
+[ext_resource type="Script" uid="uid://bfj7ivpmoirjh" path="res://ui/overlays/profile_overlay.gd" id="1_lr8tv"]
+[ext_resource type="PackedScene" uid="uid://02561fjcd3iv" path="res://ui/inventory/inventory_grid.tscn" id="2_ivebq"]
+[ext_resource type="PackedScene" uid="uid://b530cjxkit4f5" path="res://ui/inventory/equipment_slot.tscn" id="2_u8kag"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l8v81"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.17, 0.17, 0.17, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.22951797, 0.22951785, 0.22951788, 1)
+corner_detail = 5
+
+[node name="ProfileOverlay" type="MarginContainer" unique_id=798241217 node_paths=PackedStringArray("weapon_slot", "inventory_grid")]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_lr8tv")
+weapon_slot = NodePath("PanelContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/WeapoinSlot")
+inventory_grid = NodePath("PanelContainer/MarginContainer/HBoxContainer/MarginContainer2/InventoryGrid")
+request_pause = true
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=256596473]
+custom_minimum_size = Vector2(250, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_l8v81")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1602716952]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer" unique_id=1305984705]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/HBoxContainer" unique_id=1558509461]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/HBoxContainer/MarginContainer" unique_id=352975570]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=2064047793]
+layout_mode = 2
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1078005935]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=375459603]
+layout_mode = 2
+text = "Weapon"
+
+[node name="WeapoinSlot" parent="PanelContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1520204114 instance=ExtResource("2_u8kag")]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="VSeparator" type="VSeparator" parent="PanelContainer/MarginContainer/HBoxContainer" unique_id=474583476]
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/MarginContainer/HBoxContainer" unique_id=481301323]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="InventoryGrid" parent="PanelContainer/MarginContainer/HBoxContainer/MarginContainer2" unique_id=868844193 instance=ExtResource("2_ivebq")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4

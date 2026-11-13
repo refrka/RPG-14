@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Weapon" format=3 uid="uid://c1jy058vs8hek"]
+
+[ext_resource type="Script" uid="uid://dg1cw8r0vff0d" path="res://main/combat/attack_entry.gd" id="1_aw0pp"]
+[ext_resource type="Texture2D" uid="uid://tsbcebt8da8o" path="res://resources/textures/items/equipment/weapons/sword_icon_texture.png" id="1_hqvef"]
+[ext_resource type="Script" uid="uid://dngj72oiypcis" path="res://main/items/weapon.gd" id="3_2qhi1"]
+
+[sub_resource type="Resource" id="Resource_8tobt"]
+script = ExtResource("1_aw0pp")
+
+[resource]
+script = ExtResource("3_2qhi1")
+attack_entry = SubResource("Resource_8tobt")
+item_id = &"sword"
+max_stack = 1
+icon_texture = ExtResource("1_hqvef")
+metadata/_custom_type_script = "uid://c1mfbdoay7pum"

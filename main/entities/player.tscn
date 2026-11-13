@@ -4,20 +4,71 @@
 [ext_resource type="Script" uid="uid://8lih7pqhvrcc" path="res://main/entities/player.gd" id="2_qpsve"]
 [ext_resource type="Script" uid="uid://xes7khurv8b0" path="res://main/entities/entity_def.gd" id="3_olhwn"]
 [ext_resource type="Texture2D" uid="uid://cdvucsc8gwcq6" path="res://resources/textures/characters/player_sprite_sheet_texture.png" id="3_v2iwy"]
+[ext_resource type="Script" uid="uid://brh8r4f58q1ji" path="res://main/items/inventory.gd" id="4_na3yu"]
+[ext_resource type="Script" uid="uid://ckd833jqq2h5p" path="res://main/items/item_stack.gd" id="5_2fquc"]
 [ext_resource type="Script" uid="uid://7ojwiwbueddq" path="res://main/components/player_movement_component.gd" id="5_olhwn"]
+[ext_resource type="Resource" uid="uid://fspgatumfny0" path="res://resources/items/consumable/food/apple.tres" id="6_2fquc"]
 [ext_resource type="Script" uid="uid://e5pnk8k5hbcw" path="res://main/states/body_idle_state.gd" id="6_cpvfl"]
 [ext_resource type="Script" uid="uid://cd584ymll3fvn" path="res://main/states/body_moving_state.gd" id="7_qvsdu"]
+[ext_resource type="Resource" uid="uid://uejxs558lrge" path="res://resources/items/consumable/food/bread.tres" id="7_xhkp5"]
+[ext_resource type="Texture2D" uid="uid://xo52836ty2ec" path="res://resources/textures/entity_shadow.png" id="8_8tobt"]
+[ext_resource type="Resource" uid="uid://c1jy058vs8hek" path="res://resources/items/equipment/weapons/sword.tres" id="8_dt0wd"]
+[ext_resource type="Texture2D" uid="uid://b55wrhhd3y3e4" path="res://resources/textures/items/equipment/weapons/sword_sprite_texture.png" id="8_l5jg0"]
+[ext_resource type="Script" uid="uid://cd5tn32ur5pjt" path="res://main/sensor/interaction_sensor.gd" id="8_nlgl6"]
+[ext_resource type="Script" uid="uid://cyb3xretsyaw3" path="res://main/components/player_interaction_component.gd" id="9_2fquc"]
+[ext_resource type="Script" uid="uid://2fgyxuu5k2k8" path="res://main/items/item_data.gd" id="9_8j24v"]
+[ext_resource type="Script" uid="uid://bc1dscosjwey3" path="res://main/states/body_interacting_state.gd" id="13_4cwdo"]
+[ext_resource type="Script" uid="uid://tahxpu8uhc77" path="res://main/components/player_combat_component.gd" id="14_dt0wd"]
 
 [sub_resource type="Resource" id="Resource_k1fg7"]
 script = ExtResource("3_olhwn")
 entity_id = &"player"
+
+[sub_resource type="Resource" id="Resource_na3yu"]
+script = ExtResource("5_2fquc")
+item = ExtResource("6_2fquc")
+count = 5
+metadata/_custom_type_script = "uid://ckd833jqq2h5p"
+
+[sub_resource type="Resource" id="Resource_jnlp7"]
+script = ExtResource("5_2fquc")
+item = ExtResource("7_xhkp5")
+count = 10
+metadata/_custom_type_script = "uid://ckd833jqq2h5p"
+
+[sub_resource type="Resource" id="Resource_gxbki"]
+script = ExtResource("9_8j24v")
+
+[sub_resource type="Resource" id="Resource_u8kag"]
+script = ExtResource("5_2fquc")
+item = ExtResource("8_dt0wd")
+item_data = SubResource("Resource_gxbki")
+count = 1
+metadata/_custom_type_script = "uid://ckd833jqq2h5p"
+
+[sub_resource type="Resource" id="Resource_rnx6y"]
+script = ExtResource("4_na3yu")
+stacks = Array[ExtResource("5_2fquc")]([SubResource("Resource_na3yu"), SubResource("Resource_jnlp7")])
+size = 9
+weapon = SubResource("Resource_u8kag")
+metadata/_custom_type_script = "uid://brh8r4f58q1ji"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f1t2u"]
+size = Vector2(10, 5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8tobt"]
+size = Vector2(10, 15)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_aajxx"]
+radius = 8.0
+height = 20.0
 
 [sub_resource type="Animation" id="Animation_k1fg7"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath("CanvasGroup/BodySprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -32,13 +83,46 @@ _data = {
 &"RESET": SubResource("Animation_k1fg7")
 }
 
+[sub_resource type="Animation" id="Animation_xhkp5"]
+resource_name = "idle_down"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasGroup/BodySprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_4cwdo"]
+resource_name = "idle_down"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasGroup/BodySprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [5]
+}
+
 [sub_resource type="Animation" id="Animation_cpvfl"]
-length = 0.19999999999999998
+resource_name = "walk_down"
+length = 0.2
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath("CanvasGroup/BodySprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -48,29 +132,265 @@ tracks/0/keys = {
 "values": [1, 2]
 }
 
-[sub_resource type="Animation" id="Animation_qvsdu"]
+[sub_resource type="Animation" id="Animation_2fquc"]
+resource_name = "walk_down"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasGroup/BodySprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [3, 4]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nlgl6"]
 _data = {
+&"idle_down": SubResource("Animation_xhkp5"),
+&"idle_up": SubResource("Animation_4cwdo"),
 &"walk_down": SubResource("Animation_cpvfl"),
-&"walk_up": SubResource("Animation_qvsdu")
+&"walk_up": SubResource("Animation_2fquc")
+}
+
+[sub_resource type="Animation" id="Animation_h71bl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasGroup/CombatRoot/CombatPivot/WeaponSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasGroup/CombatRoot/CombatPivot/WeaponSprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(8, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasGroup/CombatRoot/CombatPivot/WeaponSprite:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CanvasGroup/CombatRoot/CombatPivot/WeaponSprite:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CanvasGroup/CombatRoot/CombatPivot/Hitbox/CollisionShape2D:shape")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CanvasGroup/CombatRoot/CombatPivot/Hitbox/CollisionShape2D:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kadju"]
+_data = {
+&"RESET": SubResource("Animation_h71bl")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h71bl"]
+size = Vector2(11.25, 3.9844356)
+
+[sub_resource type="Animation" id="Animation_4ft2j"]
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasGroup/CombatRoot/CombatPivot/WeaponSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("8_l5jg0")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasGroup/CombatRoot/CombatPivot/WeaponSprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(8, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasGroup/CombatRoot/CombatPivot/WeaponSprite:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CanvasGroup/CombatRoot/CombatPivot/WeaponSprite:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.26666668),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CanvasGroup/CombatRoot/CombatPivot/Hitbox/CollisionShape2D:shape")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.26666668),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [SubResource("RectangleShape2D_h71bl"), null]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CanvasGroup/CombatRoot/CombatPivot/Hitbox/CollisionShape2D:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(10, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CanvasGroup/CombatRoot/CombatPivot:rotation")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-0.3490658503988659, 0.3490658503988659]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ybvgq"]
+_data = {
+&"attack": SubResource("Animation_4ft2j")
 }
 
 [node name="Player" unique_id=244251850 groups=["player"] instance=ExtResource("1_ctsxe")]
+collision_layer = 11
 script = ExtResource("2_qpsve")
 entity_def = SubResource("Resource_k1fg7")
+inventory = SubResource("Resource_rnx6y")
 
-[node name="Sprite2D" parent="." index="0" unique_id=95277291]
+[node name="ShadowSprite" parent="." index="0" unique_id=151902644]
+modulate = Color(0, 0, 0, 0.15686275)
+texture = ExtResource("8_8tobt")
+
+[node name="BodySprite" parent="CanvasGroup" parent_id_path=PackedInt32Array(1190131840) index="0" unique_id=95277291]
+position = Vector2(0, -7)
 texture = ExtResource("3_v2iwy")
-offset = Vector2(0, -16)
+offset = Vector2(0, -9)
 hframes = 8
 vframes = 4
+
+[node name="CombatRoot" parent="CanvasGroup" parent_id_path=PackedInt32Array(1190131840) index="1" unique_id=1784359948]
+position = Vector2(0, -7)
+
+[node name="CombatPivot" parent="CanvasGroup/CombatRoot" index="0" unique_id=1494530653]
+y_sort_enabled = true
+rotation = 0.34906584
+
+[node name="WeaponSprite" parent="CanvasGroup/CombatRoot/CombatPivot" index="0" unique_id=1943318651]
+position = Vector2(8, 0)
+
+[node name="CollisionShape2D" parent="." index="2" unique_id=1303581947]
+position = Vector2(0, -2.5)
+shape = SubResource("RectangleShape2D_f1t2u")
+
+[node name="CollisionShape2D" parent="Hurtbox" parent_id_path=PackedInt32Array(1215618639) index="0" unique_id=1341878009]
+position = Vector2(0, -7.5)
+shape = SubResource("RectangleShape2D_8tobt")
 
 [node name="PlayerMovementComponent" type="Node" parent="ComponentRoot" parent_id_path=PackedInt32Array(663176264) index="0" unique_id=276307651]
 script = ExtResource("5_olhwn")
 metadata/_custom_type_script = "uid://7ojwiwbueddq"
 
-[node name="StateMachine" parent="." index="3" unique_id=2087782720 node_paths=PackedStringArray("initial_body_state")]
+[node name="PlayerInteractionComponent" type="Node" parent="ComponentRoot" parent_id_path=PackedInt32Array(663176264) index="2" unique_id=1778584309 node_paths=PackedStringArray("interaction_sensor")]
+process_mode = 3
+script = ExtResource("9_2fquc")
+interaction_sensor = NodePath("../../InteractionSensor")
+metadata/_custom_type_script = "uid://cyb3xretsyaw3"
+
+[node name="PlayerCombatComponent" type="Node" parent="ComponentRoot" parent_id_path=PackedInt32Array(663176264) index="3" unique_id=1471328583]
+script = ExtResource("14_dt0wd")
+
+[node name="InteractionSensor" type="Area2D" parent="." index="5" unique_id=2062509194]
+position = Vector2(0, -7)
+collision_layer = 0
+script = ExtResource("8_nlgl6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionSensor" index="0" unique_id=1935712370]
+position = Vector2(5, 0)
+shape = SubResource("CapsuleShape2D_aajxx")
+debug_color = Color(0.7, 0.7, 0.7, 0)
+
+[node name="StateMachine" parent="." index="6" unique_id=2087782720 node_paths=PackedStringArray("initial_body_state")]
 initial_body_state = NodePath("BodyStates/BodyIdleState")
 
 [node name="BodyIdleState" type="Node" parent="StateMachine/BodyStates" parent_id_path=PackedInt32Array(834736534) index="0" unique_id=1181103125]
@@ -79,6 +399,20 @@ script = ExtResource("6_cpvfl")
 [node name="BodyMovingState" type="Node" parent="StateMachine/BodyStates" parent_id_path=PackedInt32Array(834736534) index="1" unique_id=1747662555]
 script = ExtResource("7_qvsdu")
 
-[node name="BodyAnimPlayer" parent="." index="4" unique_id=901066814]
+[node name="BodyInteractingState" type="Node" parent="StateMachine/BodyStates" parent_id_path=PackedInt32Array(834736534) index="2" unique_id=32012052]
+script = ExtResource("13_4cwdo")
+metadata/_custom_type_script = "uid://bc1dscosjwey3"
+
+[node name="BodyAnimPlayer" parent="." index="7" unique_id=901066814]
 libraries/ = SubResource("AnimationLibrary_olhwn")
 libraries/player = SubResource("AnimationLibrary_nlgl6")
+
+[node name="CombatAnimPlayer" parent="." index="8" unique_id=498547204]
+libraries/ = SubResource("AnimationLibrary_kadju")
+libraries/sword = SubResource("AnimationLibrary_ybvgq")
+
+[node name="CenterMarker" parent="." index="9" unique_id=2083318839]
+position = Vector2(0, -7)
+
+[editable path="CanvasGroup/CombatRoot/CombatPivot/Hitbox"]
+[editable path="Hurtbox"]

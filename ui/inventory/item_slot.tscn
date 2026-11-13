@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://mkjm0lxpmlcs"]
+
+[ext_resource type="Script" uid="uid://hrk64k4pdapj" path="res://ui/inventory/item_slot.gd" id="1_j85vb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kvqep"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.1, 0.1, 0.1, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.24964902, 0.24964887, 0.24964872, 1)
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j85vb"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(1, 1, 1, 0.02745098)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.24964902, 0.24964887, 0.24964872, 1)
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_07ih2"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.1, 0.1, 0.1, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.7186024, 0.71860254, 0.71860236, 1)
+corner_detail = 5
+
+[node name="ItemSlot" type="MarginContainer" unique_id=1520204114 node_paths=PackedStringArray("panel", "icon_texture_rect", "count_label")]
+custom_minimum_size = Vector2(18, 18)
+mouse_filter = 0
+script = ExtResource("1_j85vb")
+default_stylebox = SubResource("StyleBoxFlat_kvqep")
+hovered_stylebox = SubResource("StyleBoxFlat_j85vb")
+cursor_selected_stylebox = SubResource("StyleBoxFlat_07ih2")
+panel = NodePath("PanelContainer")
+icon_texture_rect = NodePath("PanelContainer/IconTexture")
+count_label = NodePath("PanelContainer/MarginContainer/CountLabel")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1020263262]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_kvqep")
+
+[node name="IconTexture" type="TextureRect" parent="PanelContainer" unique_id=502187122]
+layout_mode = 2
+mouse_filter = 2
+stretch_mode = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=467628344]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="CountLabel" type="Label" parent="PanelContainer/MarginContainer" unique_id=247166425]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 6

@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="Consumable" format=3 uid="uid://cgddi8t3esppc"]
+
+[ext_resource type="Script" uid="uid://cmm46lxiqmkmd" path="res://main/items/consumable.gd" id="1_3umcf"]
+
+[resource]
+script = ExtResource("1_3umcf")
+item_id = &"health_potion_lg"

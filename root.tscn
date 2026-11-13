@@ -1,27 +1,233 @@
 [gd_scene format=3 uid="uid://bh2y1aligke26"]
 
 [ext_resource type="Script" uid="uid://dt6krajbiiegc" path="res://root.gd" id="1_pq8q7"]
-[ext_resource type="Script" uid="uid://boaii8l2oakhh" path="res://main/locations/location.gd" id="2_pyidc"]
+[ext_resource type="Script" uid="uid://bc0den0edwtsn" path="res://main/config/input_config.gd" id="2_bf3um"]
+[ext_resource type="Script" uid="uid://o5qr3sittogt" path="res://node_2d.gd" id="2_l8v81"]
+[ext_resource type="PackedScene" uid="uid://drgpfct8v5008" path="res://ui/overlays/dialogue_overlay.tscn" id="2_pyidc"]
+[ext_resource type="PackedScene" uid="uid://blf3o20un1o72" path="res://main/entities/player.tscn" id="3_vyht1"]
+[ext_resource type="PackedScene" uid="uid://csa6qq82r1jf4" path="res://main/entities/props/containers/small_normal_chest.tscn" id="5_huihk"]
+[ext_resource type="PackedScene" uid="uid://r4y2t3y3vswq" path="res://main/entities/props/containers/large_normal_chest.tscn" id="6_tw3kd"]
+[ext_resource type="PackedScene" uid="uid://dq1lfs64ekhld" path="res://main/entities/props/misc/sign.tscn" id="7_qw60f"]
+[ext_resource type="PackedScene" uid="uid://bq8c7ku6hykd3" path="res://ui/overlays/profile_overlay.tscn" id="8_bf3um"]
+[ext_resource type="Script" uid="uid://duq6cbnmrn8xv" path="res://main/dialogue/dialogue_text.gd" id="8_eji0w"]
+[ext_resource type="PackedScene" uid="uid://b26ops4slkqiy" path="res://ui/overlays/container_overlay.tscn" id="9_gd4vy"]
+[ext_resource type="PackedScene" uid="uid://mkjm0lxpmlcs" path="res://ui/inventory/item_slot.tscn" id="9_huihk"]
+[ext_resource type="PackedScene" uid="uid://4ctkngmt4vs1" path="res://main/entities/characters/creatures/blue_bug.tscn" id="9_qwhpj"]
+[ext_resource type="PackedScene" uid="uid://bodhmn3xgeta4" path="res://main/entities/characters/creatures/mow.tscn" id="10_qt76e"]
+[ext_resource type="Script" uid="uid://cigl3xs78p7i3" path="res://ui/inventory/cursor_slot.gd" id="10_tw3kd"]
+[ext_resource type="PackedScene" uid="uid://2hc0uki6fa8l" path="res://main/entities/pickup.tscn" id="11_sq7yr"]
+[ext_resource type="Resource" uid="uid://fspgatumfny0" path="res://resources/items/consumable/food/apple.tres" id="12_blcw0"]
+[ext_resource type="Script" uid="uid://ckd833jqq2h5p" path="res://main/items/item_stack.gd" id="13_50g4q"]
 
-[node name="Root" type="Node" unique_id=1505947257 groups=["root"]]
+[sub_resource type="Resource" id="Resource_vyht1"]
+script = ExtResource("2_bf3um")
+game_state = 1
+allowed_actions = Array[StringName]([&"move_left", &"move_right", &"move_up", &"move_down", &"interact", &"profile", &"attack", &"jump"])
+metadata/_custom_type_script = "uid://bc0den0edwtsn"
+
+[sub_resource type="Resource" id="Resource_qwhpj"]
+script = ExtResource("8_eji0w")
+lines = Array[String](["fuck u"])
+metadata/_custom_type_script = "uid://duq6cbnmrn8xv"
+
+[sub_resource type="Resource" id="Resource_g17lj"]
+script = ExtResource("13_50g4q")
+item = ExtResource("12_blcw0")
+count = 3
+metadata/_custom_type_script = "uid://ckd833jqq2h5p"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_huihk"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.1, 0.1, 0.1, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.25, 0.25, 0.25, 0)
+corner_detail = 5
+
+[node name="Root" type="Node" unique_id=1505947257 node_paths=PackedStringArray("entity_root") groups=["root"]]
 script = ExtResource("1_pq8q7")
+input_configs = Array[ExtResource("2_bf3um")]([SubResource("Resource_vyht1")])
+entity_root = NodePath("WorldCanvas/Node2D")
 metadata/_edit_vertical_guides_ = [-53.0]
 
-[node name="Location" type="Node2D" parent="." unique_id=1182571732 node_paths=PackedStringArray("character_root", "prop_root", "pickup_root") groups=["location"]]
-script = ExtResource("2_pyidc")
-location_id = &"Location1"
-character_root = NodePath("YSortRoot/Characters")
-prop_root = NodePath("YSortRoot/Props")
-pickup_root = NodePath("YSortRoot/Pickups")
+[node name="BGCanvas" type="CanvasLayer" parent="." unique_id=1084894560]
 
-[node name="YSortRoot" type="Node2D" parent="Location" unique_id=2010954845]
-y_sort_enabled = true
+[node name="BGRect" type="ColorRect" parent="BGCanvas" unique_id=1934075127]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.034955822, 0.18105045, 2.4065375e-08, 1)
 
-[node name="Characters" type="Node2D" parent="Location/YSortRoot" unique_id=710288459]
-y_sort_enabled = true
+[node name="WorldCanvas" type="CanvasLayer" parent="." unique_id=1264742136]
 
-[node name="Props" type="Node2D" parent="Location/YSortRoot" unique_id=1181155419]
+[node name="Node2D" type="Node2D" parent="WorldCanvas" unique_id=1153148113]
 y_sort_enabled = true
+script = ExtResource("2_l8v81")
 
-[node name="Pickups" type="Node2D" parent="Location/YSortRoot" unique_id=1499614802]
-y_sort_enabled = true
+[node name="SmallNormalChest" parent="WorldCanvas/Node2D" unique_id=1163554435 instance=ExtResource("5_huihk")]
+position = Vector2(148, 28)
+
+[node name="LargeNormalChest" parent="WorldCanvas/Node2D" unique_id=1922810414 instance=ExtResource("6_tw3kd")]
+position = Vector2(173, 26)
+
+[node name="Sign" parent="WorldCanvas/Node2D" unique_id=1282110938 instance=ExtResource("7_qw60f")]
+position = Vector2(73, 56)
+
+[node name="ShadowSprite" parent="WorldCanvas/Node2D/Sign" index="0" unique_id=946318889]
+texture = null
+offset = Vector2(0, 0)
+
+[node name="MessageBoardComponent" parent="WorldCanvas/Node2D/Sign/ComponentRoot" parent_id_path=PackedInt32Array(1282110938, 32807062) index="0" unique_id=220724775]
+message_text = SubResource("Resource_qwhpj")
+
+[node name="BlueBug" parent="WorldCanvas/Node2D" unique_id=1110245833 instance=ExtResource("9_qwhpj")]
+position = Vector2(139, 63)
+
+[node name="Player" parent="WorldCanvas/Node2D" unique_id=244251850 instance=ExtResource("3_vyht1")]
+position = Vector2(72, 100)
+
+[node name="Mow" parent="WorldCanvas/Node2D" unique_id=2071427065 instance=ExtResource("10_qt76e")]
+position = Vector2(135, 132)
+
+[node name="Pickup" parent="WorldCanvas/Node2D" unique_id=1842796657 instance=ExtResource("11_sq7yr")]
+position = Vector2(42, 79)
+stack = SubResource("Resource_g17lj")
+
+[node name="Pickup2" parent="WorldCanvas/Node2D" unique_id=880070599 instance=ExtResource("11_sq7yr")]
+position = Vector2(36, 53)
+stack = SubResource("Resource_g17lj")
+
+[node name="Pickup3" parent="WorldCanvas/Node2D" unique_id=1517420458 instance=ExtResource("11_sq7yr")]
+position = Vector2(52, 31)
+stack = SubResource("Resource_g17lj")
+
+[node name="Pickup4" parent="WorldCanvas/Node2D" unique_id=1749735382 instance=ExtResource("11_sq7yr")]
+position = Vector2(34, 28)
+stack = SubResource("Resource_g17lj")
+
+[node name="Pickup5" parent="WorldCanvas/Node2D" unique_id=897821493 instance=ExtResource("11_sq7yr")]
+position = Vector2(24, 40)
+stack = SubResource("Resource_g17lj")
+
+[node name="Pickup6" parent="WorldCanvas/Node2D" unique_id=1214326169 instance=ExtResource("11_sq7yr")]
+position = Vector2(40, 40)
+stack = SubResource("Resource_g17lj")
+
+[node name="Pickup7" parent="WorldCanvas/Node2D" unique_id=2046661793 instance=ExtResource("11_sq7yr")]
+position = Vector2(85, 25)
+stack = SubResource("Resource_g17lj")
+
+[node name="Pickup8" parent="WorldCanvas/Node2D" unique_id=976919538 instance=ExtResource("11_sq7yr")]
+position = Vector2(60, 42)
+stack = SubResource("Resource_g17lj")
+
+[node name="Pickup9" parent="WorldCanvas/Node2D" unique_id=1187395135 instance=ExtResource("11_sq7yr")]
+position = Vector2(65, 20)
+stack = SubResource("Resource_g17lj")
+
+[node name="Pickup10" parent="WorldCanvas/Node2D" unique_id=1632936399 instance=ExtResource("11_sq7yr")]
+position = Vector2(74, 32)
+stack = SubResource("Resource_g17lj")
+
+[node name="Pickup11" parent="WorldCanvas/Node2D" unique_id=1883434680 instance=ExtResource("11_sq7yr")]
+position = Vector2(95, 39)
+stack = SubResource("Resource_g17lj")
+
+[node name="Pickup12" parent="WorldCanvas/Node2D" unique_id=273818284 instance=ExtResource("11_sq7yr")]
+position = Vector2(113, 24)
+stack = SubResource("Resource_g17lj")
+
+[node name="Pickup13" parent="WorldCanvas/Node2D" unique_id=482246775 instance=ExtResource("11_sq7yr")]
+position = Vector2(117, 36)
+stack = SubResource("Resource_g17lj")
+
+[node name="Pickup14" parent="WorldCanvas/Node2D" unique_id=1867782698 instance=ExtResource("11_sq7yr")]
+position = Vector2(124, 19)
+stack = SubResource("Resource_g17lj")
+
+[node name="Pickup15" parent="WorldCanvas/Node2D" unique_id=1647964892 instance=ExtResource("11_sq7yr")]
+position = Vector2(103, 18)
+stack = SubResource("Resource_g17lj")
+
+[node name="Pickup16" parent="WorldCanvas/Node2D" unique_id=1300564830 instance=ExtResource("11_sq7yr")]
+position = Vector2(87, 25)
+stack = SubResource("Resource_g17lj")
+
+[node name="Pickup17" parent="WorldCanvas/Node2D" unique_id=1779725069 instance=ExtResource("11_sq7yr")]
+position = Vector2(96, 24)
+stack = SubResource("Resource_g17lj")
+
+[node name="Pickup18" parent="WorldCanvas/Node2D" unique_id=1214899835 instance=ExtResource("11_sq7yr")]
+position = Vector2(88, 15)
+stack = SubResource("Resource_g17lj")
+
+[node name="Pickup19" parent="WorldCanvas/Node2D" unique_id=1444177579 instance=ExtResource("11_sq7yr")]
+position = Vector2(84, 35)
+stack = SubResource("Resource_g17lj")
+
+[node name="Pickup20" parent="WorldCanvas/Node2D" unique_id=928765700 instance=ExtResource("11_sq7yr")]
+position = Vector2(72, 19)
+stack = SubResource("Resource_g17lj")
+
+[node name="Pickup21" parent="WorldCanvas/Node2D" unique_id=1526477582 instance=ExtResource("11_sq7yr")]
+position = Vector2(108, 40)
+stack = SubResource("Resource_g17lj")
+
+[node name="OverlayCanvas" type="CanvasLayer" parent="." unique_id=701183322]
+
+[node name="OverlayRoot" type="Control" parent="OverlayCanvas" unique_id=576943580]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="DialogueOverlay" parent="OverlayCanvas/OverlayRoot" unique_id=364467804 groups=["dialogue_overlay"] instance=ExtResource("2_pyidc")]
+visible = false
+layout_mode = 1
+
+[node name="ProfileOverlay" parent="OverlayCanvas/OverlayRoot" unique_id=798241217 instance=ExtResource("8_bf3um")]
+visible = false
+layout_mode = 1
+
+[node name="ContainerOverlay" parent="OverlayCanvas/OverlayRoot" unique_id=934429725 instance=ExtResource("9_gd4vy")]
+layout_mode = 1
+
+[node name="FGCanvas" type="CanvasLayer" parent="." unique_id=1237771915]
+
+[node name="FGRect" type="ColorRect" parent="FGCanvas" unique_id=1477885638]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+
+[node name="CursorCanvas" type="CanvasLayer" parent="." unique_id=181673645]
+
+[node name="CursorSlot" parent="CursorCanvas" unique_id=1520204114 instance=ExtResource("9_huihk")]
+process_mode = 3
+mouse_filter = 2
+script = ExtResource("10_tw3kd")
+default_stylebox = SubResource("StyleBoxFlat_huihk")
+hovered_stylebox = SubResource("StyleBoxFlat_huihk")
+group_selected_stylebox = SubResource("StyleBoxFlat_huihk")
+cursor_selected_stylebox = SubResource("StyleBoxFlat_huihk")
+
+[node name="PanelContainer" parent="CursorCanvas/CursorSlot" index="0" unique_id=1020263262]
+theme_override_styles/panel = SubResource("StyleBoxFlat_huihk")
+
+[editable path="WorldCanvas/Node2D/Sign"]
+[editable path="WorldCanvas/Node2D/Sign/Hurtbox"]
+[editable path="CursorCanvas/CursorSlot"]

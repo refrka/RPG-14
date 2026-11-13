@@ -1,0 +1,140 @@
+[gd_scene format=3 uid="uid://2hc0uki6fa8l"]
+
+[ext_resource type="Script" uid="uid://yeth585q40u8" path="res://main/entities/pickup.gd" id="1_gbcnc"]
+[ext_resource type="Script" uid="uid://dri4aps12ghpi" path="res://main/states/state_machine.gd" id="2_307r8"]
+[ext_resource type="Texture2D" uid="uid://b6akvnp8fuwbr" path="res://resources/textures/items/apple_icon_texture.png" id="2_cgqcj"]
+[ext_resource type="Script" uid="uid://xes7khurv8b0" path="res://main/entities/entity_def.gd" id="2_tb2e8"]
+[ext_resource type="Texture2D" uid="uid://cdesl2ls7rwvt" path="res://resources/textures/pickup_shadow.png" id="3_ejhg5"]
+[ext_resource type="Script" uid="uid://cexnwk2gf44rg" path="res://main/sensor/sensor.gd" id="3_in7cj"]
+[ext_resource type="Script" uid="uid://d1uwcmwoitndo" path="res://main/components/animation_component.gd" id="5_g17lj"]
+[ext_resource type="AudioStream" uid="uid://w8ff4cq3s0by" path="res://resources/audio/pickup_audio.wav" id="8_vjjnw"]
+
+[sub_resource type="Resource" id="Resource_qw60f"]
+script = ExtResource("2_tb2e8")
+entity_id = &"pickup"
+metadata/_custom_type_script = "uid://xes7khurv8b0"
+
+[sub_resource type="Animation" id="Animation_ejhg5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BodySprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -4)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BodySprite:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [-4.0]
+}
+
+[sub_resource type="Animation" id="Animation_tb2e8"]
+resource_name = "drop"
+length = 0.45
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BodySprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.091361016, 0.13780633, 0.15109828, 0.1644653, 0.22139244, 0.319447),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -5), Vector2(0, -20), Vector2(0, -25), Vector2(0, -26), Vector2(0, -24), Vector2(0, -20), Vector2(0, -6)]
+}
+
+[sub_resource type="Animation" id="Animation_vjjnw"]
+resource_name = "float"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BodySprite:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [-6.0, -8.0, -6.0, -4.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ejhg5"]
+_data = {
+&"RESET": SubResource("Animation_ejhg5"),
+&"drop": SubResource("Animation_tb2e8"),
+&"float": SubResource("Animation_vjjnw")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_aajxx"]
+radius = 22.022715
+
+[node name="Pickup" type="StaticBody2D" unique_id=1842796657 node_paths=PackedStringArray("sensor", "body_sprite", "component_root", "state_machine", "center_marker", "audio_player")]
+script = ExtResource("1_gbcnc")
+sensor = NodePath("Sensor")
+entity_def = SubResource("Resource_qw60f")
+body_sprite = NodePath("BodySprite")
+component_root = NodePath("ComponentRoot")
+state_machine = NodePath("StateMachine")
+center_marker = NodePath("CenterMarker")
+audio_player = NodePath("AudioStreamPlayer")
+
+[node name="ShadowSprite" type="Sprite2D" parent="." unique_id=1097533689]
+modulate = Color(0, 0, 0, 0.15686275)
+texture = ExtResource("3_ejhg5")
+
+[node name="BodySprite" type="Sprite2D" parent="." unique_id=1561349466]
+position = Vector2(0, -4)
+texture = ExtResource("2_cgqcj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1564821976]
+
+[node name="ComponentRoot" type="Node" parent="." unique_id=216295190]
+
+[node name="AnimationComponent" type="Node" parent="ComponentRoot" unique_id=217869939 node_paths=PackedStringArray("body_anim_player")]
+script = ExtResource("5_g17lj")
+body_anim_player = NodePath("../../BodyAnimPlayer")
+metadata/_custom_type_script = "uid://d1uwcmwoitndo"
+
+[node name="StateMachine" type="Node" parent="." unique_id=340259483 node_paths=PackedStringArray("body_state_root")]
+script = ExtResource("2_307r8")
+body_state_root = NodePath("BodyStates")
+metadata/_custom_type_script = "uid://dri4aps12ghpi"
+
+[node name="BodyStates" type="Node" parent="StateMachine" unique_id=418080364]
+
+[node name="BodyAnimPlayer" type="AnimationPlayer" parent="." unique_id=910372768]
+libraries/ = SubResource("AnimationLibrary_ejhg5")
+autoplay = &"float"
+
+[node name="Sensor" type="Area2D" parent="." unique_id=1580798902]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("3_in7cj")
+metadata/_custom_type_script = "uid://cexnwk2gf44rg"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sensor" unique_id=1853488580]
+modulate = Color(1, 1, 1, 0.2901961)
+shape = SubResource("CircleShape2D_aajxx")
+debug_color = Color(0.7873333, 1, 0.78, 0.007843138)
+
+[node name="CenterMarker" type="Marker2D" parent="." unique_id=2060192413]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1957690559]
+stream = ExtResource("8_vjjnw")
+volume_db = -5.0

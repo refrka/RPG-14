@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://bodhmn3xgeta4"]
+
+[ext_resource type="PackedScene" uid="uid://bbx0gmq2u06ns" path="res://main/entities/character.tscn" id="1_fxwmh"]
+[ext_resource type="Script" uid="uid://xes7khurv8b0" path="res://main/entities/entity_def.gd" id="2_55bx4"]
+[ext_resource type="Texture2D" uid="uid://xo52836ty2ec" path="res://resources/textures/entity_shadow.png" id="3_4x82b"]
+[ext_resource type="Texture2D" uid="uid://cibu5wrog5jbk" path="res://resources/textures/characters/creatures/mow_sprite_texture.png" id="4_niaws"]
+[ext_resource type="Script" uid="uid://c0aaouchx4wlx" path="res://main/components/health_component.gd" id="5_55bx4"]
+[ext_resource type="Script" uid="uid://b2bukgcimuplf" path="res://main/components/movement_component.gd" id="6_4x82b"]
+[ext_resource type="Script" uid="uid://e5pnk8k5hbcw" path="res://main/states/body_idle_state.gd" id="7_niaws"]
+[ext_resource type="Script" uid="uid://hhe324v4qqjn" path="res://main/states/body_corpse_state.gd" id="8_4ddop"]
+
+[sub_resource type="Resource" id="Resource_0rypl"]
+script = ExtResource("2_55bx4")
+entity_id = &"mow"
+base_health = 4
+metadata/_custom_type_script = "uid://xes7khurv8b0"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fxwmh"]
+size = Vector2(10, 11)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_55bx4"]
+size = Vector2(4, 4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4x82b"]
+size = Vector2(10, 11)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_niaws"]
+size = Vector2(4, 4)
+
+[node name="Mow" unique_id=244251850 instance=ExtResource("1_fxwmh")]
+entity_def = SubResource("Resource_0rypl")
+
+[node name="ShadowSprite" parent="." index="0" unique_id=151902644]
+modulate = Color(0, 0, 0, 0.15686275)
+texture = ExtResource("3_4x82b")
+
+[node name="BodySprite" parent="CanvasGroup" parent_id_path=PackedInt32Array(1190131840) index="0" unique_id=95277291]
+texture = ExtResource("4_niaws")
+offset = Vector2(2, -8)
+hframes = 3
+
+[node name="CollisionShape2D" parent="." index="2" unique_id=1303581947]
+position = Vector2(0, -5.5)
+shape = SubResource("RectangleShape2D_fxwmh")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." index="3" unique_id=50480545]
+position = Vector2(7, -5)
+shape = SubResource("RectangleShape2D_55bx4")
+debug_color = Color(1, 0.3, 0, 0)
+
+[node name="CollisionShape2D" parent="Hurtbox" parent_id_path=PackedInt32Array(1215618639) index="0" unique_id=1341878009]
+position = Vector2(0, -5.5)
+shape = SubResource("RectangleShape2D_4x82b")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Hurtbox" parent_id_path=PackedInt32Array(1215618639) index="1" unique_id=1003889857]
+position = Vector2(7, -5)
+shape = SubResource("RectangleShape2D_niaws")
+debug_color = Color(1, 0.7833333, 0, 0)
+
+[node name="HealthComponent" type="Node" parent="ComponentRoot" parent_id_path=PackedInt32Array(663176264) index="1" unique_id=1351486242]
+script = ExtResource("5_55bx4")
+make_corpse = true
+metadata/_custom_type_script = "uid://c0aaouchx4wlx"
+
+[node name="MovementComponent" type="Node" parent="ComponentRoot" parent_id_path=PackedInt32Array(663176264) index="2" unique_id=66350199]
+script = ExtResource("6_4x82b")
+metadata/_custom_type_script = "uid://b2bukgcimuplf"
+
+[node name="StateMachine" parent="." index="6" unique_id=2087782720 node_paths=PackedStringArray("initial_body_state")]
+initial_body_state = NodePath("BodyStates/BodyIdleState")
+
+[node name="BodyIdleState" type="Node" parent="StateMachine/BodyStates" parent_id_path=PackedInt32Array(834736534) index="0" unique_id=1927053345]
+script = ExtResource("7_niaws")
+metadata/_custom_type_script = "uid://e5pnk8k5hbcw"
+
+[node name="BodyCorpseState" type="Node" parent="StateMachine/BodyStates" parent_id_path=PackedInt32Array(834736534) index="1" unique_id=1454828463]
+script = ExtResource("8_4ddop")
+corpse_frame = 2
+metadata/_custom_type_script = "uid://hhe324v4qqjn"
+
+[editable path="CanvasGroup/CombatRoot/CombatPivot/Hitbox"]
+[editable path="Hurtbox"]
