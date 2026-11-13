@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://cop05qcw8lqsw"]
+
+[ext_resource type="Script" uid="uid://c4ncpmip220dl" path="res://main/misc/world_animation_node.gd" id="1_1h8fj"]
+[ext_resource type="PackedScene" uid="uid://cnceur2qbsi5j" path="res://main/combat/hitbox.tscn" id="2_4a1qc"]
+
+[node name="WorldAnimationNode" type="Node2D" unique_id=2031847446 node_paths=PackedStringArray("anim_player", "sprite")]
+script = ExtResource("1_1h8fj")
+anim_player = NodePath("AnimationPlayer")
+sprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1973566323]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1562264651]
+
+[node name="Hitbox" parent="." unique_id=72943803 instance=ExtResource("2_4a1qc")]
+
+[editable path="Hitbox"]

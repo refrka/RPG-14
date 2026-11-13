@@ -1,6 +1,8 @@
 class_name Hitbox extends Sensor
 
 
+signal entity_hit(entity: Entity)
+
 
 var hit_list: Array
 
@@ -9,7 +11,7 @@ var attack_entry: AttackEntry
 
 
 
-func initialize(_entity: Entity) -> void:
+func initialize(_entity: Entity = null) -> void:
 
 	super(_entity)
 
@@ -41,11 +43,15 @@ func hit(hurtbox: Hurtbox) -> void:
 
 		hit_list.append(hurtbox)
 
-		var damage_package = generate_damage_package()
+		entity_hit.emit(hurtbox.entity)
 
-		damage_package.dir = entity.direction_to_entity(hurtbox.entity)
+		if attack_entry:
 
-		hurtbox.receive_damage_package(damage_package)
+			var damage_package = generate_damage_package()
+
+			damage_package.dir = entity.direction_to_entity(hurtbox.entity)
+
+			hurtbox.receive_damage_package(damage_package)
 
 
 

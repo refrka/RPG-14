@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://2hc0uki6fa8l" path="res://main/entities/pickup.tscn" id="11_sq7yr"]
 [ext_resource type="Resource" uid="uid://fspgatumfny0" path="res://resources/items/consumable/food/apple.tres" id="12_blcw0"]
 [ext_resource type="Script" uid="uid://ckd833jqq2h5p" path="res://main/items/item_stack.gd" id="13_50g4q"]
+[ext_resource type="PackedScene" uid="uid://bfvfvldyir4jl" path="res://main/world_animations/area_effects/fire_area_effect.tscn" id="14_50g4q"]
 
 [sub_resource type="Resource" id="Resource_vyht1"]
 script = ExtResource("2_bf3um")
@@ -68,6 +69,11 @@ color = Color(0.034955822, 0.18105045, 2.4065375e-08, 1)
 
 [node name="WorldCanvas" type="CanvasLayer" parent="." unique_id=1264742136]
 
+[node name="Node2D2" type="Node2D" parent="WorldCanvas" unique_id=155144719]
+
+[node name="FireAreaEffect" parent="WorldCanvas/Node2D2" unique_id=2031847446 instance=ExtResource("14_50g4q")]
+position = Vector2(185, 52)
+
 [node name="Node2D" type="Node2D" parent="WorldCanvas" unique_id=1153148113]
 y_sort_enabled = true
 script = ExtResource("2_l8v81")
@@ -80,10 +86,6 @@ position = Vector2(173, 26)
 
 [node name="Sign" parent="WorldCanvas/Node2D" unique_id=1282110938 instance=ExtResource("7_qw60f")]
 position = Vector2(73, 56)
-
-[node name="ShadowSprite" parent="WorldCanvas/Node2D/Sign" index="0" unique_id=946318889]
-texture = null
-offset = Vector2(0, 0)
 
 [node name="MessageBoardComponent" parent="WorldCanvas/Node2D/Sign/ComponentRoot" parent_id_path=PackedInt32Array(1282110938, 32807062) index="0" unique_id=220724775]
 message_text = SubResource("Resource_qwhpj")
@@ -230,4 +232,5 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_huihk")
 
 [editable path="WorldCanvas/Node2D/Sign"]
 [editable path="WorldCanvas/Node2D/Sign/Hurtbox"]
+[editable path="WorldCanvas/Node2D/Pickup"]
 [editable path="CursorCanvas/CursorSlot"]

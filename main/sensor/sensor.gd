@@ -29,7 +29,7 @@ var sensors: Array
 
 
 
-func initialize(_entity: Entity) -> void:
+func initialize(_entity: Entity = null) -> void:
 
 	entity = _entity
 

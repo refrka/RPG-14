@@ -10,7 +10,7 @@ var interactable_entities: Array
 
 
 
-func initialize(_entity: Entity) -> void:
+func initialize(_entity: Entity = null) -> void:
 
 	super(_entity)
 

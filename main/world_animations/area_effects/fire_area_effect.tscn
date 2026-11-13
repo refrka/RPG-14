@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://bfvfvldyir4jl"]
+
+[ext_resource type="PackedScene" uid="uid://cop05qcw8lqsw" path="res://main/misc/world_animation_node.tscn" id="1_1i2fd"]
+[ext_resource type="Texture2D" uid="uid://bh4wpvtgrierh" path="res://resources/textures/world_animations/area_effects/fire_area_effect_sprite_texture.png" id="2_7hmmt"]
+
+[sub_resource type="Animation" id="Animation_2xp61"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_aba7s"]
+resource_name = "idle"
+length = 0.48
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.12, 0.24, 0.36),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_s3j52"]
+_data = {
+&"RESET": SubResource("Animation_2xp61"),
+&"idle": SubResource("Animation_aba7s")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7hmmt"]
+radius = 14.0
+
+[node name="FireAreaEffect" unique_id=2031847446 node_paths=PackedStringArray("hitbox") instance=ExtResource("1_1i2fd")]
+hitbox = NodePath("Hitbox")
+
+[node name="Sprite2D" parent="." index="0" unique_id=1973566323]
+texture = ExtResource("2_7hmmt")
+hframes = 2
+vframes = 2
+
+[node name="AnimationPlayer" parent="." index="1" unique_id=1562264651]
+libraries/ = SubResource("AnimationLibrary_s3j52")
+autoplay = &"idle"
+
+[node name="CollisionShape2D" parent="Hitbox" parent_id_path=PackedInt32Array(72943803) index="0" unique_id=1958348172]
+shape = SubResource("CircleShape2D_7hmmt")
+
+[editable path="Hitbox"]

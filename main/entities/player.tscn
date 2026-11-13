@@ -19,6 +19,7 @@
 [ext_resource type="Script" uid="uid://2fgyxuu5k2k8" path="res://main/items/item_data.gd" id="9_8j24v"]
 [ext_resource type="Script" uid="uid://bc1dscosjwey3" path="res://main/states/body_interacting_state.gd" id="13_4cwdo"]
 [ext_resource type="Script" uid="uid://tahxpu8uhc77" path="res://main/components/player_combat_component.gd" id="14_dt0wd"]
+[ext_resource type="Script" uid="uid://mchol86lpcr6" path="res://main/components/effects_component.gd" id="15_8j24v"]
 
 [sub_resource type="Resource" id="Resource_k1fg7"]
 script = ExtResource("3_olhwn")
@@ -379,6 +380,10 @@ metadata/_custom_type_script = "uid://cyb3xretsyaw3"
 
 [node name="PlayerCombatComponent" type="Node" parent="ComponentRoot" parent_id_path=PackedInt32Array(663176264) index="3" unique_id=1471328583]
 script = ExtResource("14_dt0wd")
+
+[node name="EffectsComponent" type="Node" parent="ComponentRoot" parent_id_path=PackedInt32Array(663176264) index="4" unique_id=1278024938]
+script = ExtResource("15_8j24v")
+metadata/_custom_type_script = "uid://mchol86lpcr6"
 
 [node name="InteractionSensor" type="Area2D" parent="." index="5" unique_id=2062509194]
 position = Vector2(0, -7)
